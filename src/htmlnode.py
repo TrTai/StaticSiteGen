@@ -45,14 +45,25 @@ class ParentNode(HTMLNode):
     def __init__(self, tag = None, children = None, props = None):
         super().__init__(tag, None, children, props)
     def to_html(self):
+        child_of_parent = ''
+        returned_children = ''
         if self.tag == None:
             raise ValueError("Parent must have Tag")
         if self.children == None:
             raise ValueError("Parent must have Children")
+        for child in self.children:
+            if child is ParentNode:
+                child_of_parent = ParentNode.to_html()
+            else:
+                returned_children = self.return_children()
+        return f'<{self.tag}{self.props_to_html()}>{returned_children}{child_of_parent}</{self.tag}>'
+
+    def return_children(self):
         returned_html = ''
         for child in self.children:
-            returned_html += child.to_html()
-        return f'<{self.tag}{self.props_to_html()}>{returned_html}</{self.tag}>'
+                returned_html += child.to_html()
+        return returned_html
+
 
     def __repr__(self):
         return f"ParentNode({self.tag}, {self.children}, {self.props})"

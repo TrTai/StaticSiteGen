@@ -1,6 +1,8 @@
 import unittest
 
+from htmlnode import HTMLNode
 from textnode import TextNode
+from textnode import text_to_html_Node
 
 class TestTextNode(unittest.TestCase):
 
@@ -39,9 +41,10 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("This is a text node", "bold", "https://boot.dev")
         self.assertFalse(node.__eq__(node2))
 
-
-
-
+    def test_html_convert(self):
+        testText1 = TextNode("This is a bolded text", "bold")
+        testHtml = HTMLNode("b", "This is a bolded text")
+        self.assertEqual(text_to_html_Node(testText1), testHtml)
 
 if __name__ == "__main__":
     unittest.main()
